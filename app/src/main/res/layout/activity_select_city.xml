@@ -7,6 +7,7 @@
     tools:context=".SelectCity">
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
@@ -27,8 +28,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/city_name"
+            android:inputType="textPersonName"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -38,4 +39,12 @@
             android:background="#00000000"
             app:srcCompat="@android:drawable/ic_menu_search" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lst_citys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
