@@ -7,11 +7,11 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 
-public class checkNetState {
+enum NetState {
+    NONE, WIFI, MOBILE
+}
 
-    public enum NetState {
-        NONE, WIFI, MOBILE
-    }
+public class checkNetState {
 
     public static NetState getNetState(Context context) {
         if (context == null) {

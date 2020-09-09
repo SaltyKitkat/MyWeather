@@ -9,10 +9,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Weather {
-    String sourceName;
-    String sourceUrl = "http://wthrcdn.etouch.cn/WeatherApi?citykey=";
-    String cityCode;
-    Result result;
+    private String sourceName;
+    private String sourceUrl = "http://wthrcdn.etouch.cn/WeatherApi?citykey=";
+    private String cityCode;
+    public Result result;
 
     public void setSource(String name, String url) {
         sourceName = name;

@@ -17,7 +17,7 @@ public class WeatherXMLParser {
         parse(input);
     }
 
-    public void parse(String xmldata) {
+    protected void parse(String xmldata) {
         try {
             XmlPullParserFactory fac = XmlPullParserFactory.newInstance();
             XmlPullParser parser = fac.newPullParser();

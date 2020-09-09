@@ -1,16 +1,19 @@
 package com.saltykitkat.myweather;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,10 +62,26 @@ public class MainActivity extends AppCompatActivity {
         txtWind = findViewById(R.id.txt_wind);
         txtCurrentTemperature = findViewById(R.id.txt_CurrentTemperature);
 
+        btnChooseCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SelectCity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                update();
+            }
+        });
+
         weather0 = new Weather("101010100");
 
         Log.d("myWeather", "checknetwork");
-        if (checkNetState.getNetState(MainActivity.this) == checkNetState.NetState.NONE) {
+        if (checkNetState.getNetState(MainActivity.this) == NetState.NONE) {
             Log.d("myWeather", "Net failed");
             Toast.makeText(MainActivity.this, "无法连接网络", Toast.LENGTH_LONG).show();
         } else {
@@ -72,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void update() {
+    protected void update() {
         Toast.makeText(MainActivity.this, "updating data", Toast.LENGTH_LONG).show();
         Log.d("mtWeather", "update");
         final Handler handler = new Handler() {
@@ -92,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    public void draw(Result result) {
+    protected void draw(Result result) {
         txtTitle.setText(result.city + "天气");
         txtCityName.setText(" " + result.city);
         txtUpdateTime.setText(result.updatetime);
@@ -105,5 +124,17 @@ public class MainActivity extends AppCompatActivity {
         txtWeatherDetails.setText(result.weather_details[1][0]);
         txtWind.setText(result.wind_direction[1][0] + ":" + result.wind_force[1][0]);
         //todo
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode != 0) {
+            String cityCode = data.getStringExtra("cityCode");
+            if (cityCode != null) {
+                weather0.setCity(cityCode);
+                update();
+            }
+        }
     }
 }
